@@ -1,25 +1,27 @@
-// routes/notes.js
 const express = require('express');
 const router  = express.Router();
 const Note    = require('../models/Note');
 const isSignedIn = require('../middleware/is-signed-in');
 
-// — CREATE —
 // Show “new note” form
 router.get('/new', isSignedIn, (req, res) => {
   res.render('notes/new', { note: {} });
 });
+
 // Handle form submission
 router.post('/', isSignedIn, async (req, res, next) => {
   try {
-    await Note.create({ head: req.body.head, owner: req.user._id });
+    await Note.create({ 
+      head: req.body.head, 
+      body: req.body.body, 
+      owner: req.user._id 
+    });
     res.redirect('/notes');
   } catch (err) {
     next(err);
   }
 });
 
-// — READ —
 // Index (list all user’s notes)
 router.get('/', isSignedIn, async (req, res, next) => {
   try {
@@ -29,6 +31,7 @@ router.get('/', isSignedIn, async (req, res, next) => {
     next(err);
   }
 });
+
 // Show one note
 router.get('/:id', isSignedIn, async (req, res, next) => {
   try {
@@ -39,7 +42,6 @@ router.get('/:id', isSignedIn, async (req, res, next) => {
   }
 });
 
-// — UPDATE —
 // Show edit form
 router.get('/:id/edit', isSignedIn, async (req, res, next) => {
   try {
@@ -49,17 +51,18 @@ router.get('/:id/edit', isSignedIn, async (req, res, next) => {
     next(err);
   }
 });
+
 // Handle edit
 router.put('/:id', isSignedIn, async (req, res, next) => {
   try {
-    await Note.findByIdAndUpdate(req.params.id, { head: req.body.head });
+    await Note.findByIdAndUpdate(req.params.id, { head: req.body.head, body: req.body.body });
     res.redirect(`/notes/${req.params.id}`);
   } catch (err) {
     next(err);
   }
 });
 
-// — DELETE —
+// Handle delete
 router.delete('/:id', isSignedIn, async (req, res, next) => {
   try {
     await Note.findByIdAndDelete(req.params.id);

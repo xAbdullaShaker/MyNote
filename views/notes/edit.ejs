@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <title>Edit Note</title>
 </head>
 <body>
-    
+  <h1>Edit Note</h1>
+
+  <form action="/notes/<%= note._id %>?_method=PUT" method="POST">
+    <label for="head">Title:</label>
+    <input type="text" id="head" name="head" required value="<%= note.head %>" />
+
+    <br/>
+
+    <label for="body">Description:</label>
+    <textarea id="body" name="body" rows="5" cols="30"><%= note.body %></textarea>
+
+    <br/>
+
+    <button type="submit">Save Changes</button>
+  </form>
+
+  <a href="/notes/<%= note._id %>">Back to note</a>
 </body>
 </html>

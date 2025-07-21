@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>My Notes</title>
-  <link rel="stylesheet" href="public/styles.css" /> <!-- optional -->
+  <link rel="stylesheet" href="/public/styles.css" /> <!-- optional -->
 </head>
 <body>
   <h1>My Notes</h1>
@@ -16,9 +16,8 @@
     <ul>
       <% notes.forEach(note => { %>
         <li>
-          <a href="/notes/<%= note._id %>">
-            <%= note.head %>
-          </a>
+          <a href="/notes/<%= note._id %>"><%= note.head %></a>
+          <p><%= note.body %></p>
           |
           <a href="/notes/<%= note._id %>/edit">Edit</a>
           <form action="/notes/<%= note._id %>?_method=DELETE" method="POST" style="display:inline;">

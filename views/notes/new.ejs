@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New</title>
+  <meta charset="UTF-8" />
+  <title>Create New Note</title>
 </head>
 <body>
-    
+  <h1>Create a New Note</h1>
+
+  <form action="/notes" method="POST">
+    <label for="head">Title:</label>
+    <input type="text" id="head" name="head" required value="<%= note.head || '' %>" />
+
+    <br/>
+
+    <label for="body">Description:</label>
+    <textarea id="body" name="body" rows="5" cols="30"><%= note.body || '' %></textarea>
+
+    <br/>
+
+    <button type="submit">Add Note</button>
+  </form>
+
+  <a href="/notes">Back to notes</a>
 </body>
 </html>
