@@ -1,6 +1,6 @@
 require('dotenv').config({ quiet: true })
 const express        = require('express')
-const app            = express()
+const app            = express()           // <-- define app first
 const methodOverride = require('method-override')
 const morgan         = require('morgan')
 const mongoose       = require('mongoose')
@@ -12,6 +12,9 @@ const isSignedIn     = require('./middleware/is-signed-in')
 const passUserToView = require('./middleware/pass-user-to-view')
 
 const noteRoutes     = require('./routes/notes')
+
+// Set view engine AFTER app is created
+app.set('view engine', 'ejs')
 
 mongoose.connect(process.env.MONGODB_URI)
 mongoose.connection.on('connected', () => {
@@ -32,9 +35,8 @@ app.use(passUserToView)
 
 // ROOT
 app.get('/', (req, res) => {
-  res.render('index.ejs', { title: 'my App' })
+  res.render('index', { title: 'my App' })  // No need to add .ejs extension
 })
-
 
 app.use('/notes', noteRoutes)
 
