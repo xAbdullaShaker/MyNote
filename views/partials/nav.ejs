@@ -1,9 +1,45 @@
-<nav>
-  <a href="/">🏠 Home</a>
-  <a href="/notes">🗒️ My Notes</a>
-  <% if (user) { %>
-    <a href="/auth/sign-out">🚪 Sign out</a>
-  <% } else { %>
-    <a href="/auth/sign-in">🔑 Sign in</a>
-  <% } %>
+
+<nav class="navbar">
+  <div class="navbar__container">
+    <a href="/" class="navbar__brand">
+      <span class="navbar__brand-icon">📝</span>
+      MyNote
+    </a>
+    
+    <button class="navbar__mobile-toggle" aria-label="Toggle navigation">
+      <svg class="navbar__mobile-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+    
+    <ul class="navbar__menu">
+      <li class="navbar__item">
+        <a href="/" class="navbar__link">
+          <span class="navbar__icon">🏠</span>
+          Home
+        </a>
+      </li>
+      <li class="navbar__item">
+        <a href="/notes" class="navbar__link">
+          <span class="navbar__icon">🗒️</span>
+          My Notes
+        </a>
+      </li>
+      <% if (user) { %>
+        <li class="navbar__item">
+          <a href="/auth/sign-out" class="navbar__link navbar__link--button">
+            <span class="navbar__icon">🚪</span>
+            Sign out
+          </a>
+        </li>
+      <% } else { %>
+        <li class="navbar__item">
+          <a href="/auth/sign-in" class="navbar__link">
+            <span class="navbar__icon">🔑</span>
+            Sign in
+          </a>
+        </li>
+      <% } %>
+    </ul>
+  </div>
 </nav>

@@ -1,14 +1,38 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= note.head %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
 <body>
-  <h1><%= note.head %></h1>
-  <p><%= note.body %></p>
+  <%- include('../partials/nav.ejs') %>
 
-  <a href="/notes/<%= note._id %>/edit">Edit</a> |
-  <a href="/notes">Back to notes</a>
+  <div class="note-detail-container">
+    <div class="note-detail-header">
+      <h1 class="note-detail-title"><%= note.head %></h1>
+    </div>
+
+    <div class="note-detail-card">
+      <div class="note-detail-content"><%= note.body %></div>
+      
+      <div class="note-detail-actions">
+        <a href="/notes/<%= note._id %>/edit" class="note-detail-button edit-button">
+          <svg class="button-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.333 2.00001C11.5081 1.82494 11.7169 1.68605 11.9465 1.59129C12.1761 1.49653 12.4228 1.44775 12.6716 1.44775C12.9204 1.44775 13.1671 1.49653 13.3967 1.59129C13.6263 1.68605 13.8352 1.82494 14.0103 2.00001C14.1854 2.17508 14.3243 2.38394 14.419 2.61355C14.5138 2.84316 14.5626 3.08982 14.5626 3.33868C14.5626 3.58753 14.5138 3.83419 14.419 4.0638C14.3243 4.29341 14.1854 4.50227 14.0103 4.67734L5.00033 13.6873L1.33366 14.6667L2.31299 11L11.333 2.00001Z" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Edit Note
+        </a>
+        <a href="/notes" class="note-detail-button back-button">
+          <svg class="button-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to Notes
+        </a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
