@@ -1,0 +1,9 @@
+<nav>
+  <a href="/">🏠 Home</a>
+  <a href="/notes">🗒️ My Notes</a>
+  <% if (user) { %>
+    <a href="/auth/sign-out">🚪 Sign out</a>
+  <% } else { %>
+    <a href="/auth/sign-in">🔑 Sign in</a>
+  <% } %>
+</nav>
