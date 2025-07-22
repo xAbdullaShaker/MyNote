@@ -2,17 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
+ <link rel="stylesheet" href="/stylesheets/style.css">
+
 </head>
 <body>
   <%- include('partials/nav') %>
 
-  <% if (user) { %>
-    <h1>Welcome, <%= user.username %>!</h1>
-    <a href="/notes">Go to My Notes</a>
-  <% } else { %>
-    <h1>Welcome to MyNote</h1>
-    <p><a href="/auth/sign-up">Sign up</a> or <a href="/auth/sign-in">Sign in</a>.</p>
-  <% } %>
+  <main>
+    <div class="container">
+      <div class="card">
+        <div class="card-layout">
+          <div class="hero-section">
+            <svg class="note-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.5 3.5H4.5C3.95 3.5 3.5 3.95 3.5 4.5V19.5C3.5 20.05 3.95 20.5 4.5 20.5H19.5C20.05 20.5 20.5 20.05 20.5 19.5V4.5C20.5 3.95 20.05 3.5 19.5 3.5Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8.5 7.5H15.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8.5 12H15.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8.5 16.5H12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <h2 class="hero-title">Capture your thoughts</h2>
+            <p class="hero-text">Keep your ideas organized and accessible anywhere, anytime.</p>
+            <div class="dots">
+              <div class="dot dot-1"></div>
+              <div class="dot dot-2"></div>
+              <div class="dot dot-3"></div>
+            </div>
+          </div>
+          
+          <div class="content-section">
+            <% if (user) { %>
+              <h1 class="welcome-title">Welcome back, <span class="highlight"><%= user.username %></span>!</h1>
+              <p class="welcome-text">Ready to continue capturing your thoughts? Access all your notes with a single click.</p>
+              <a href="/notes" class="btn btn-primary">
+                <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                Go to My Notes
+              </a>
+            <% } else { %>
+              <h1 class="welcome-title">Welcome to MyNote</h1>
+              <p class="welcome-text">Your personal space for notes, ideas, and everything in between. Join us today!</p>
+              <div class="button-group">
+                <a href="/auth/sign-up" class="btn btn-primary">
+                  <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                  </svg>
+                  Sign up
+                </a>
+                <a href="/auth/sign-in" class="btn btn-secondary">
+                  <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                  </svg>
+                  Sign in
+                </a>
+              </div>
+            <% } %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer">
+        <p>© <%= new Date().getFullYear() %> MyNote. All rights reserved.</p>
+      </div>
+    </div>
+  </main>
 </body>
 </html>
