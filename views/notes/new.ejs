@@ -2,25 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create New Note</title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
 <body>
-  <h1>Create a New Note</h1>
+  <%- include('../partials/nav.ejs') %>
 
-  <form action="/notes" method="POST">
-    <label for="head">Title:</label>
-    <input type="text" id="head" name="head" required value="<%= note.head || '' %>" />
+  <div class="form-container">
+    <div class="form-header">
+      <h1 class="form-title">Create a New Note</h1>
+    </div>
 
-    <br/>
+    <div class="form-card">
+      <form action="/notes" method="POST">
+        <div class="form-group">
+          <label for="head" class="form-label">Title</label>
+          <input 
+            type="text" 
+            id="head" 
+            name="head" 
+            required 
+            value="<%= note.head || '' %>" 
+            class="form-input"
+            placeholder="Enter note title"
+          />
+        </div>
 
-    <label for="body">Description:</label>
-    <textarea id="body" name="body" rows="5" cols="30"><%= note.body || '' %></textarea>
+        <div class="form-group">
+          <label for="body" class="form-label">Description</label>
+          <textarea 
+            id="body" 
+            name="body" 
+            class="form-input form-textarea"
+            placeholder="Enter note description"
+          ><%= note.body || '' %></textarea>
+        </div>
 
-    <br/>
+        <button type="submit" class="form-submit">Add Note</button>
+      </form>
+    </div>
 
-    <button type="submit">Add Note</button>
-  </form>
-
-  <a href="/notes">Back to notes</a>
+    <a href="/notes" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back to notes
+    </a>
+  </div>
 </body>
 </html>

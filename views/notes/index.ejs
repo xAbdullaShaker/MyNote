@@ -1,34 +1,67 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Notes</title>
-  <link rel="stylesheet" href="/public/styles.css" /> <!-- optional -->
+ <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
   <%- include('../partials/nav.ejs') %>
 
-  <h1>My Notes</h1>
+  <div class="notes-container">
+    <div class="notes-header">
+      <h1 class="page-title">My Notes</h1>
+      <a href="/notes/new" class="create-note-btn">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 4.16667V15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4.16666 10H15.8333" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Create New Note
+      </a>
+    </div>
 
-  <a href="/notes/new">➕ Create New Note</a>
-
-  <% if (notes.length === 0) { %>
-    <p>You don’t have any notes yet.</p>
-  <% } else { %>
-    <ul>
-      <% notes.forEach(note => { %>
-        <li>
-          <a href="/notes/<%= note._id %>"><%= note.head %></a>
-          <p><%= note.body %></p>
-          |
-          <a href="/notes/<%= note._id %>/edit">Edit</a>
-          <form action="/notes/<%= note._id %>?_method=DELETE" method="POST" style="display:inline;">
-            <button type="submit">Delete</button>
-          </form>
-        </li>
-      <% }) %>
-    </ul>
-  <% } %>
-
+    <% if (notes.length === 0) { %>
+      <div class="empty-state">
+        <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.5 3.5H4.5C3.95 3.5 3.5 3.95 3.5 4.5V19.5C3.5 20.05 3.95 20.5 4.5 20.5H19.5C20.05 20.5 20.5 20.05 20.5 19.5V4.5C20.5 3.95 20.05 3.5 19.5 3.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8.5 7.5H15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8.5 12H15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8.5 16.5H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="empty-state-text">You don't have any notes yet.</p>
+        <a href="/notes/new" class="create-note-btn">Create Your First Note</a>
+      </div>
+    <% } else { %>
+      <ul class="notes-list">
+        <% notes.forEach(note => { %>
+          <li class="note-card">
+            <div class="note-content">
+              <a href="/notes/<%= note._id %>" class="note-title"><%= note.head %></a>
+              <p class="note-body"><%= note.body %></p>
+            </div>
+            <div class="note-actions">
+              <a href="/notes/<%= note._id %>/edit" class="note-edit">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.333 2.00001C11.5081 1.82494 11.7169 1.68605 11.9465 1.59129C12.1761 1.49653 12.4228 1.44775 12.6716 1.44775C12.9204 1.44775 13.1671 1.49653 13.3967 1.59129C13.6263 1.68605 13.8352 1.82494 14.0103 2.00001C14.1854 2.17508 14.3243 2.38394 14.419 2.61355C14.5138 2.84316 14.5626 3.08982 14.5626 3.33868C14.5626 3.58753 14.5138 3.83419 14.419 4.0638C14.3243 4.29341 14.1854 4.50227 14.0103 4.67734L5.00033 13.6873L1.33366 14.6667L2.31299 11L11.333 2.00001Z" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Edit
+              </a>
+              <form action="/notes/<%= note._id %>?_method=DELETE" method="POST" class="delete-form">
+                <button type="submit" class="delete-button">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 4H3.33333H14" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5.33334 4.00001V2.66668C5.33334 2.31305 5.47381 1.97392 5.72386 1.72387C5.97391 1.47382 6.31305 1.33334 6.66667 1.33334H9.33334C9.68696 1.33334 10.0261 1.47382 10.2761 1.72387C10.5262 1.97392 10.6667 2.31305 10.6667 2.66668V4.00001M12.6667 4.00001V13.3333C12.6667 13.687 12.5262 14.0261 12.2761 14.2762C12.0261 14.5262 11.687 14.6667 11.3333 14.6667H4.66667C4.31305 14.6667 3.97391 14.5262 3.72386 14.2762C3.47381 14.0261 3.33334 13.687 3.33334 13.3333V4.00001H12.6667Z" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Delete
+                </button>
+              </form>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </div>
 </body>
 </html>
