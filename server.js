@@ -6,12 +6,12 @@ const morgan         = require('morgan')
 const mongoose       = require('mongoose')
 const session        = require('express-session')
 const MongoStore     = require('connect-mongo')
-
 const authController = require('./controllers/auth.controller')
 const isSignedIn     = require('./middleware/is-signed-in')
 const passUserToView = require('./middleware/pass-user-to-view')
-
 const noteRoutes     = require('./routes/notes')
+
+
 
 // Set view engine AFTER app is created
 app.set('view engine', 'ejs')

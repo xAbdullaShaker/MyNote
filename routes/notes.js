@@ -1,74 +1,117 @@
 const express = require('express');
-const router  = express.Router();
-const Note    = require('../models/Note');
+const router = express.Router();
+const Note = require('../models/Note');
 const isSignedIn = require('../middleware/is-signed-in');
 
-// Show “new note” form
+
+// gets the note frim the user "note form"
 router.get('/new', isSignedIn, (req, res) => {
   res.render('notes/new', { note: {} });
 });
 
-// Handle form submission
-router.post('/', isSignedIn, async (req, res, next) => {
+// HANDLE FORM SUBMISSION - CREATE NEW NOTE
+router.post('/', isSignedIn, async (req, res) => {
+  console.log('body: ', req.body)
   try {
-    await Note.create({ 
-      head: req.body.head, 
-      body: req.body.body, 
-      owner: req.user._id 
-    });
+    // Add owner to note before saving
+    req.body.owner = req.user._id;
+
+    // Create note in database
+    await Note.create(req.body);
+
+    // takes u back to /notes 
     res.redirect('/notes');
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.log(error);
+    res.send('Something went wrong');
   }
 });
 
-// Index (list all user’s notes)
-router.get('/', isSignedIn, async (req, res, next) => {
+// SHOW ALL NOTES FOR LOGGED IN USER 
+router.get('/', isSignedIn, async (req, res) => {
   try {
-    const notes = await Note.find({ owner: req.user._id });
-    res.render('notes/index', { notes });
-  } catch (err) {
-    next(err);
+    // Find notes that belong to logged in user
+    const foundNotes = await Note.find({ owner: req.user._id });
+
+    // Render notes/index view and pass notes
+    res.render('notes/index', { notes: foundNotes });
+  } catch (error) {
+    console.log(error);
+    res.send('Something went wrong');
   }
 });
 
-// Show one note
-router.get('/:id', isSignedIn, async (req, res, next) => {
+// this sjows one single note 
+router.get('/:id', isSignedIn, async (req, res) => {
   try {
-    const note = await Note.findById(req.params.id);
-    res.render('notes/show', { note });
-  } catch (err) {
-    next(err);
-  }
-});
+    // Find note by id
+    const foundNote = await Note.findById(req.params.id);
 
-// Show edit form
-router.get('/:id/edit', isSignedIn, async (req, res, next) => {
-  try {
-    const note = await Note.findById(req.params.id);
-    res.render('notes/edit', { note });
-  } catch (err) {
-    next(err);
-  }
-});
-
-// Handle edit
-router.put('/:id', isSignedIn, async (req, res, next) => {
-  try {
-    await Note.findByIdAndUpdate(req.params.id, { head: req.body.head, body: req.body.body });
-    res.redirect(`/notes/${req.params.id}`);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// Handle delete
-router.delete('/:id', isSignedIn, async (req, res, next) => {
-  try {
-    await Note.findByIdAndDelete(req.params.id);
+    // Render notes/show view and pass note
+    res.render('notes/show', { note: foundNote });
+  } catch (error) {
+    console.log(error);
     res.redirect('/notes');
-  } catch (err) {
-    next(err);
+  }
+});
+
+// DELETE NOTE
+router.delete('/:id', isSignedIn, async (req, res) => {
+  try {
+    const foundNote = await Note.findById(req.params.id);
+    if (foundNote.owner.equals(req.user._id)) {
+      // Delete the note
+      await foundNote.deleteOne();
+
+      // Redirect to notes index
+      return res.redirect('/notes');
+    }
+
+    // If user not owner, send "Not authorized"
+    res.send('Not authorized');
+  } catch (error) {
+    console.log(error);
+    res.send('Something went wrong');
+  }
+});
+
+// SHOW EDIT FORM FOR NOTE
+router.get('/:id/edit', isSignedIn, async (req, res) => {
+  try {
+    const foundNote = await Note.findById(req.params.id);
+
+    // Check ownership
+    if (foundNote.owner.equals(req.user._id)) {
+      // Render edit form and pass note data
+      return res.render('notes/edit', { note: foundNote });
+    }
+
+    res.send('Not authorized');
+  } catch (error) {
+    console.log(error);
+    res.redirect('/notes');
+  }
+});
+
+// HANDLE EDIT FORM SUBMISSION 
+router.put('/:id', isSignedIn, async (req, res) => {
+  try {
+    const foundNote = await Note.findById(req.params.id);
+    if (foundNote.owner.equals(req.user._id)) {
+      
+      await Note.findByIdAndUpdate(req.params.id, {
+        title: req.body.title,
+        body: req.body.body
+      }, { new: true });
+
+      // Redirect to show updated note
+      return res.redirect(`/notes/${req.params.id}`);
+    }
+
+    res.send('Not authorized');
+  } catch (error) {
+    console.log(error);
+    res.send('Something went wrong');
   }
 });
 
