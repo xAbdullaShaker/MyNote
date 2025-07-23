@@ -1,5 +1,5 @@
-// its shows the n
-const Note = require('../models/Note'); 
+// controllers/noteController.js
+const Note = require('../models/Note');  // adjust path if needed
 
 module.exports.index = async (req, res) => {
   try {
