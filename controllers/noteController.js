@@ -1,5 +1,4 @@
-// controllers/noteController.js
-const Note = require('../models/Note');  // adjust path if needed
+const Note = require('../models/Note'); 
 
 module.exports.index = async (req, res) => {
   try {

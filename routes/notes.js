@@ -4,7 +4,7 @@ const Note = require('../models/Note');
 const isSignedIn = require('../middleware/is-signed-in');
 
 
-// gets the note frim the user "note form"
+// gets the note frim the user "note form" shows him the new.ejs
 router.get('/new', isSignedIn, (req, res) => {
   res.render('notes/new', { note: {} });
 });
@@ -13,7 +13,7 @@ router.get('/new', isSignedIn, (req, res) => {
 router.post('/', isSignedIn, async (req, res) => {
   console.log('body: ', req.body)
   try {
-    // Add owner to note before saving
+    // Add owner to note before saving 
     req.body.owner = req.user._id;
 
     // Create note in database

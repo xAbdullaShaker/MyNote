@@ -849,13 +849,13 @@ body {
 
 .signin-container input:focus {
   outline: none;
-  border-color: #0ea5e9;
+  border-color: #4f46e5;
   box-shadow: 0 0 0 3px rgba(14,165,233,0.2);
 }
 
 .signin-container button[type="submit"] {
   padding: 0.75rem;
-  background-color: #0ea5e9;
+  background-color: #4f46e5;
   color: #ffffff;
   border: none;
   border-radius: 0.5rem;
@@ -866,7 +866,7 @@ body {
 }
 
 .signin-container button[type="submit"]:hover {
-  background-color: #0284c7;
+  background-color: #4f46e5;
 }
 
 .signin-container button[type="submit"]:active {
@@ -962,7 +962,7 @@ body {
 
 .signup-container button[type="submit"] {
   padding: 0.75rem;
-  background-color: #0ea5e9;
+  background-color: #4f46e5;
   color: #ffffff;
   border: none;
   border-radius: 0.5rem;
@@ -973,7 +973,7 @@ body {
 }
 
 .signup-container button[type="submit"]:hover {
-  background-color: #0284c7;
+  background-color: #4f46e5;
 }
 
 .signup-container button[type="submit"]:active {
