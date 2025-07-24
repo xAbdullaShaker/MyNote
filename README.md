@@ -9,6 +9,10 @@ A simple personal notes web app built with **Node.js**, **Express**, **MongoDB**
 # 🗒️ MyNote
 
 ---
+<img width="1380" height="1212" alt="image" src="https://github.com/user-attachments/assets/c7f21c46-ca5a-48ac-b473-78f3f10561b1" />
+
+
+---
 
 ## 📌 Features
 
